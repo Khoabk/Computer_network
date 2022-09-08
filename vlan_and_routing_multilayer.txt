@@ -1,0 +1,74 @@
+//configuring router:
+en
+conf t
+//set ip for interface
+int g0/1
+ip address 201.150.10.100 255.255.255.0
+no shut
+ex
+//perform default routing
+ip route 0.0.0.0 0.0.0.0 g0/1
+CTRL+C
+copy run start
+
+
+
+//configuring layer three switch
+en
+conf t
+hostname sth
+//create vlans
+vlan 10
+vlan 20
+CTRL+C
+show vlan
+conf t
+int f0/1
+switchport mode access
+switchport access vlan 10
+int f0/10
+switchport mode access
+switchport access vlan 20
+
+//back to conf mode
+int vlan 10
+ip address 192.168.10.1 255.255.255.0   //The default gateway IP of end devices
+no shut
+
+
+int vlan 20
+ip address 192.168.20.1 255.255.255.0  //The default gateway IP of end devices
+no shut
+CTRL+C
+
+//To display configuration in priviledge user mode
+show run
+
+//Go to config mode and type
+ip routing
+
+
+
+
+
+//To put an IP address on an interface of multilayer switch
+//Go to conf mode
+conf t
+int g0/1
+no switchport
+ip address 201.150.10.101 255.255.255.0
+no shut
+exit
+//To set the default gateway
+//Go to config mode
+ip default-gateway 201.150.10.200
+ctrl+c
+
+
+
+
+
+
+
+
+

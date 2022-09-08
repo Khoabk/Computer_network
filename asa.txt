@@ -1,0 +1,28 @@
+//From ISP router
+int f0/0
+ip add 1.1.1.1 255.255.255.0
+no shut
+ex
+int l2  //loop back interface
+ip add 2.2.2.2 255.255.255.255
+ctrl+c
+
+
+conf t
+hostname ISP
+ip dhpc pool ISP
+network 1.1.1.0 255.255.255.0
+default-router 1.1.1.1
+ctrl+c
+
+
+
+
+
+
+
+
+//Start off in the ASA CLI priviledged mode
+show run
+show int ip brief
+

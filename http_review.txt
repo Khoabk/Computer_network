@@ -1,0 +1,72 @@
+Application layer protocols:
+1. HTTP:
+Round-trip-time:
+ -The time it takes for a small packet to travel from client to server and then back to the client.
+ -It includes packet-propagation delays, packet-queueing delays, packet-processing delays.
+
+Three-way handshake:
+ The client sends a small TCP segment to the server, the server acknowledges and responds with a small TCP segment, finally, the client acknowledges back to the server.
+
+Non-Persistent connections: A new connection is estabished for each transmission.
+Persistent connections: Multiple transmissons can be in serial via one single connection.
+
+HTTP standard methods:
+POST: upload new resource.
+GET: read or search for resources.
+PUT: upload new resource or modify available resources.
+DELETE: remove 
+
+
+
+Reponse messages:
+200 OK: Request succeeded and the information is returned in the reponse
+301 Moved Permanently: Requested object has been permanently moved.
+400 Bad Request: This is a generic error code indicating that the request could not be understood by the server.
+404 Not Found: The requested document does not exist on this server.
+505 HTTP Version Not Supported:The requested HTTP protocol version is not supported by the server.
+
+
+
+2. FTP:
+2 TCP connections are maintained, one is for transmitting controlling messages from the client to the server, the other is used for data transmitting. The control connection is a persistent connection, the data connection is a non-persistent connection.
+
+Procedure: When a user starts an FTP session with a remote host, the client side of FTP first initiates a control TCP connection with the server side (remote host) on server port number 21. The client side of FTP sends the user indentification and password over this control cnnection. The client side of FTP also sends, over the control connection, commands to change the remote directory. When the server side receives a command for file transfer over the control connection, the server side initiates a TCP data connection to client side. FTP send exactly one file over the data connection and then closes the data connection. If, during the same session, the user wants to transfoer another file, FTP opens another data connection.
+
+FTP commands and replies:
+- Commands:
+• USER username: Used to send the user identification to the server.
+• PASS password: Used to send the user password to the server.
+• LIST: Used to ask the server to send back a list of all the files in the current
+remote directory. The list of files is sent over a (new and non-persistent) data
+connection rather than the control TCP connection.
+• RETR filename: Used to retrieve (that is, get) a file from the current directory of the remote host. This command causes the remote host to initiate a data
+connection and to send the requested file over the data connection.
+• STOR filename: Used to store (that is, put) a file into the current directory
+of the remote host.
+
+- Replies:
+• 331 Username OK, password required
+• 125 Data connection already open; transfer starting
+• 425 Can’t open data connection
+• 452 Error writing file
+
+
+
+3. SMTP: Simple Mail Transfer Protocol
+General procedure:
+A typical message starts its journey in the sender's user agent, travels to the sender's mail server, and travels to the recipient's mail server, where it is deposisted in the recipient's mailbox.
+
+In case the sender's mail server cannot deliver mail to thhe recipient's mail server, the sender's server holds the message in a message queue and attemps to transfer the message later. Reattemps are often done every 30 minutes or so, if there is no success after serveral days, the sender's server removes the message and notifies the sender with an e-mail message.
+
+
+HTTP vs SMTP:
+HTTP transfers files from a Web server to a Web client.
+SMTP transfers files from one mail server to another mail server.
+Both SMTP and HTTP use persistent connections.
+HTTP is mainly a PULL PROTOCOL, someone loads information on a Web server and users use HTTP to pull then information from the server at their convenience. TCP connection is initiated by the machine that wants to receive the file.
+SMTP is primarily a PUSH PROTOCOL, the sending mail server pushes the file to the receiving mail server. TCP connection is initiated by the machine that wants to send the file.
+SMTP requires each message, including the body of each message , to be in 7 ASCII format. HTTP data does not impose this restriction.
+HTTP encapsulates each object in its own HTTP response message. SMTP places all of the message's object into one message.
+
+
+

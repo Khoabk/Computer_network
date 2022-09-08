@@ -1,0 +1,71 @@
+DHCP configuration for many VLANS:
+STEP 1: CREATE, ASSIGN IP/SUBNET MASK FOR VLANS
+//Go to the multilayer switch:
+en
+cont t
+//create vlan
+vlan 2
+vlan 3
+vlan 4
+//set default ip addresses for vlans
+int vlan 1
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+int vlan 2
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+int vlan 3
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+int vlan 4
+ip address 192.168.4.1 255.255.255.0
+no shutdown
+
+
+STEP 2: CONFIG DHCP server
+//Go to DHCP server
+//Using gui
+
+
+
+
+
+STEP 3: CONFIG MODE ACCESS/TRUNK IN VLANS
+//Go to the multilayer switch:
+en
+conf t
+int range fa0/1 - 7
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+
+//Go to each sub-switch and do the same thing below
+en
+conf t
+vlan 2
+vlan 3
+vlan 4
+ex
+int range fa0/1 - 12
+switchport mode access
+switchport access vlan 2
+ex
+int range fa0/13 - 14
+switchport mode access
+switchport access vlan 3
+ex
+CTRL + Z
+
+
+STEP 4: TELL end devices where to get IP address
+//Go to the multilayer switch:
+en
+conf t
+iny vlan 1
+ip helper-address 192.168.1.2    //address of DHCP server
+iny vlan 2
+ip helper-address 192.168.1.2 
+iny vlan 3
+ip helper-address 192.168.1.2 
+
+

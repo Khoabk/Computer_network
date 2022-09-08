@@ -1,0 +1,7 @@
+Wan connections are leased from ISP
+Lan connection is owned by private sector
+ATM architecture:
+virtual connection:
+- Transmission path(TP): physical connection between end point and switch or between switch and switch (UNI, NNI)
+- Virtual paths (VPS): provides connection between two switches
+- Virtual circuits (VC's): 

@@ -1,0 +1,22 @@
+To generate the public and private RSA keys, Bob performs the following steps:
+1. Choose two large prime numbers, p and q. How large should p and q be? The
+larger the values, the more difficult it is to break RSA, but the longer it takes to
+perform the encoding and decoding. RSA Laboratories recommends that the
+product of p and q be on the order of 1,024 bits. For a discussion of how to
+find large prime numbers, see [Caldwell 2012].
+2. Compute n = pq and z = (p – 1)(q – 1).
+3. Choose a number, e, less than n, that has no common factors (other than 1)
+with z. (In this case, e and z are said to be relatively prime.) The letter e is used
+since this value will be used in encryption.
+4. Find a number, d, such that ed – 1 is exactly divisible (that is, with no remainder) by z. The letter d is used because this value will be used in decryption. Put another way, given e, we choose d such that
+ed mod z = 1
+5. The public key that Bob makes available to the world, KB+, is the pair of numbers (n, e); his private key, KB–, is the pair of numbers (n, d)
+
+
+The encryption by Alice and the decryption by Bob are done as follows:
+• Suppose Alice wants to send Bob a bit pattern represented by the integer number m
+(with m < n). To encode, Alice performs the exponentiation me, and then computes the integer remainder when me is divided by n. In other words, the encrypted value, c, of Alice’s plaintext message, m, is
+c = me mod n
+The bit pattern corresponding to this ciphertext c is sent to Bob.
+• To decrypt the received ciphertext message, c, Bob computes
+m = cd mod n

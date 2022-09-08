@@ -1,0 +1,16 @@
+Transport layer:
+Terminologies:
+Demultiplexing => The job of delivering the data in a transport-layer segment to the correct socket.
+Requirements:
+1.The sockets have unique identifiers.
+2.Each segment have special fields that indicate the socket to which the segment is to be delivered. These special fields are the source port number and the destination port number.
+Port number is a 16-bit number, ranging from 0 to 65535, port numbers ranging from 0 to 1023 are called well-known port numbers.
+Overall procedure:
+Each socket in the host could be assigned a port number, and when a segment arrives at the host, the transport layer examines the destination port number in the segment and directs the segment into the attached process.
+
+
+Multiplexing => The job of gathering data chunks with header information (that will later be used in demultiplexing) to create segments, and passing the segments to the network layer.
+
+UDP socket is fully identified by a two-tuple consisting of a destination IP address and a destination port number.
+
+TCP socket is identified by a four tuple: (source IP address, source port number, destination IP address, destination port number).

@@ -1,0 +1,66 @@
+//Configuring router for switching between vlans
+en
+conf t
+hostname ISP
+line con 0
+logging synchronous
+ex
+int vlan 8
+ip address 8.8.8.1 255.255.255.0
+ex
+int vlan 10
+ip address 10.10.10.10 255.255.255.0
+ex
+int range f1/0 - 6
+sw mode access
+sw acc vlan 8
+spanning-tree portfast
+no shutdown
+ex
+int range f1/7 - 15
+sw mode acc
+sw acc vlan 10
+spanning-tree portfast
+no shutdown
+//go to config mode
+ip routing
+//Configuring router to connect with outside
+int f0/0
+ip add 1.1.1.1 255.255.255.0
+no shut
+ex
+ctrl+c
+conf t
+ip dhpc pool ISP
+network 1.1.1.0 255.255.255.0
+default-router 1.1.1.1
+dns-server 8.8.8.8
+ex
+ip dhcp excluded-address 1.1.1.1
+end
+copy r s
+ctrl+c
+
+
+
+
+
+
+
+
+
+
+
+//Ho w to obtain DHCP on router
+int f0/0
+ip add dhcp
+no shutdown
+ex
+
+
+
+
+
+
+
+
